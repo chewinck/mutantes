@@ -2,16 +2,45 @@ package main
 
 import (
 	"fmt"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 func main() {
 
-	var adn = [...]string{"ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"}
+	r := gin.Default()
+	r.POST("/mutant", func(c *gin.Context) {
+		var dato InfoADN
+
+		if err := c.BindJSON(&dato); err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(dato.Adn)
+		esMutante := isMutant(dato.Adn)
+		if !esMutante {
+			c.JSON(http.StatusForbidden, gin.H{
+				"message": "No es mutante",
+			})
+			return
+		}
+		//fmt.Println(adn)
+		c.JSON(http.StatusOK, gin.H{
+			"message": "Es mutante",
+		})
+	})
+	r.Run()
+
+	/* var adn = [...]string{"ATGCGA", "CAGTGC", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"} */
 	/* var adn = [...]string{"ATCCCC", "CAGTTC", "TTATGT", "AGAAGG", "CCCCGA", "TCACGG"} */
 	/* int n := len(adn) */
-	esMutante := isMutant(adn)
-	fmt.Println("es verdaderamente mutante", esMutante)
+	/* esMutante := isMutant(adn) */
+	/* fmt.Println("es verdaderamente mutante", esMutante) */
 
+}
+
+type InfoADN struct {
+	Adn [6]string `json:"adn"`
 }
 
 func isMutant(adn [6]string) bool {
