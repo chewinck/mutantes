@@ -40,10 +40,10 @@ func main() {
 }
 
 type InfoADN struct {
-	Adn [6]string `json:"adn"`
+	Adn []string `json:"adn"`
 }
 
-func isMutant(adn [6]string) bool {
+func isMutant(adn []string) bool {
 	var secuenciaTotal, secuenciaParcialRow, secuenciaParcialCol, secuenciaParcialObl int
 	secuenciaTotal = 0
 	secuenciaParcialRow = int(secuenciaRow(adn))
@@ -62,7 +62,7 @@ func isMutant(adn [6]string) bool {
 	/* fmt.Println(strings.Contains(adn[4], "CCCC")) */
 }
 
-func secuenciaOblicua(adn [6]string) int {
+func secuenciaOblicua(adn []string) int {
 	var i, j int
 	var cadena, newCadena, antCadena string
 	var repeticionesObl, secuencia int
@@ -84,7 +84,8 @@ func secuenciaOblicua(adn [6]string) int {
 					if string(cadena[j+1]) == string(newCadena[j+2]) && string(cadena[j+1]) == string(antCadena[j]) {
 						repeticionesObl = repeticionesObl + 2
 						secuencia = secuencia + 1
-						fmt.Println("hay una secuencia Oblicua")
+						fmt.Printf("posición i %d j  %d", i, j)
+						fmt.Println("hay una secuencia Oblicua" + string(cadena[j+1]))
 					}
 				}
 			}
@@ -97,7 +98,7 @@ func secuenciaOblicua(adn [6]string) int {
 	return secuencia
 }
 
-func secuenciaRow(adn [6]string) int {
+func secuenciaRow(adn []string) int {
 
 	var i, j int
 	var cadena string
@@ -114,7 +115,8 @@ func secuenciaRow(adn [6]string) int {
 					if string(cadena[j+2]) == string(cadena[j+1]) && string(cadena[j]) == string(cadena[j+1]) {
 						repeticionesRow = repeticionesRow + 2
 						secuencia = secuencia + 1
-						fmt.Println("hay una secuencia" + string(cadena[j+2]))
+						fmt.Println("hay una secuencia fila" + string(cadena[j+2]))
+						fmt.Printf("fila %d", i)
 					}
 				}
 			}
@@ -127,7 +129,7 @@ func secuenciaRow(adn [6]string) int {
 						string(cadena[j-2]) == string(cadena[j-1]) && string(cadena[j]) == string(cadena[j-1]) {
 						repeticionesRow = repeticionesRow + 2
 						secuencia = secuencia + 1
-						fmt.Println("hay una secuencia" + string(cadena[j+2]))
+						fmt.Println("hay una secuencia columna" + string(cadena[j+2]))
 					}
 				}
 			}
@@ -140,7 +142,7 @@ func secuenciaRow(adn [6]string) int {
 
 }
 
-func secuenciaCol(adn [6]string) int {
+func secuenciaCol(adn []string) int {
 
 	var i, j int
 	var cadena, newCadena, ultCadena, antCadena string
@@ -165,7 +167,7 @@ func secuenciaCol(adn [6]string) int {
 					if string(ultCadena[i]) == string(newCadena[i]) && string(newCadena[i]) == string(cadena[i]) {
 						repeticionesCol = repeticionesCol + 2
 						secuencia = secuencia + 1
-						fmt.Println("hay una secuencia")
+						fmt.Println("hay una secuencia columna")
 						/* fmt.Printf("En posición fila %d y posición columna %d", j, i) */
 					}
 				}
